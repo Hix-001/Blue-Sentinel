@@ -2,13 +2,6 @@
 BLUE SENTINEL - UNIFIED REAL-TIME AI DEMONSTRATION (ENHANCED VERSION)
 Government Presentation Version with Live Vessel Tracking & AI Predictions
 
-ENHANCEMENTS:
-- Immersive map with geographic labels (cities, ports, coastlines)
-- Reference points for better location understanding
-- Territory boundaries visualization
-- Enhanced tooltips with region context
-- Better zoom controls and default view
-
 This unified application combines:
 - AI Model Training & Inference (LSTM)
 - Real-time Vessel Tracking & Prediction
