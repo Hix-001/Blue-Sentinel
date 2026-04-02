@@ -1,4 +1,4 @@
-# ⚓ BLUE SENTINEL // SOVEREIGN AEGIS
+# ⚓ BLUE SENTINEL / SOVEREIGN AEGIS
 ### **Predictive Maritime Oversight // Indo-Pacific Node DL-04 // IUU Interdiction**
 
 ![Visitors](https://api.visitorbadge.io/api/visitors?path=Hix-001/Blue-Sentinel&label=OPERATIVES%20ON%20SITE&countColor=%23263238)
