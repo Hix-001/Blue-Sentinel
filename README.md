@@ -54,13 +54,7 @@ pip install -r requirements.txt
 
 # Establish Uplink
 streamlit run blue_sentinel.py
-
----
-
-## 🗺️ TACTICAL HUD PREVIEW
-![Tactical Feed](assets/demo.gif)
-*Real-time vessel mesh showing kinetic icon mapping and risk-scored trajectory trails.*
-
+```
 ---
 
 ## 🚀 DEPLOYMENT COMPARISON
