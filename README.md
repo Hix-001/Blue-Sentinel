@@ -40,6 +40,7 @@ $$f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)$$
 The resulting **Cell State ($C_t$)** identifies when a vessel's behavior—loitering, zigzagging, or sudden SOG (Speed Over Ground) spikes—matches known IUU signatures.
 ---
 
+
 ## 🚀 DEPLOYMENT PROTOCOL
 
 ### **1. Local Installation (Windows/Linux/macOS)**
