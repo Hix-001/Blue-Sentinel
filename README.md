@@ -1,5 +1,66 @@
-⚓ Blue Sentinel // Sovereign Maritime IntelligenceAutonomous IUU Detection & Predictive Neural SurveillanceBlue Sentinel is a professional-grade maritime domain awareness platform engineered for the 2026 tactical landscape. By integrating Long Short-Term Memory (LSTM) neural networks with real-time geospatial telemetry, the system provides a predictive shield against Illegal, Unreported, and Unregulated (IUU) fishing and unauthorized maritime incursions in the Indo-Pacific.🛰️ System CapabilitiesNeural Anomaly Engine: Utilizes TensorFlow-backed LSTM architectures to process 5-feature AIS vectors, identifying non-linear trajectory deviations.Aegis Tactical Mesh: A high-fidelity, interactive mapping interface powered by PyDeck and Mapbox for real-time asset visualization.Intel Stream Protocol: A live-syncing intelligence feed that prioritizes high-risk targets based on behavioral risk scoring.Darknode HUD: A specialized, low-latency interface designed for high-contrast environments and tactical clarity.🛠️ Technical ArchitectureThe platform operates on a three-tier intelligence stack:LayerComponentFunctionIngestionAIS Telemetry StreamCapture of Lat/Lon, SOG (Speed over Ground), and COG (Course over Ground).InferenceLSTM Neural CoreTime-series analysis of vessel history to calculate behavioral risk indices.VisualStreamlit + PyDeckRendering of the tactical mesh and Sovereign Command HUD.Neural Logic Deep-DiveThe system normalizes raw maritime data into a vectorized format:$$V = [ \text{lat}_n, \text{lon}_n, \text{sog}_n, \sin(\text{cog}), \cos(\text{cog}) ]$$These vectors are fed into a 10-step look-back window, allowing the AI to "remember" the vessel's past maneuvers to detect erratic loitering or "dark" patterns indicative of IUU activity.🚀 Quick Start & Installation1. RequirementsPython 3.9+TensorFlow 2.xStreamlitPyDeck2. SetupClone the repository and initialize the maritime environment:Bashgit clone https://github.com/Hix-001/Blue-Sentinel.git
+# ⚓ BLUE SENTINEL // SOVEREIGN AEGIS
+### **Predictive Maritime Oversight // Indo-Pacific Node DL-04 // IUU Interdiction**
+
+![Visitors](https://api.visitorbadge.io/api/visitors?path=Hix-001/Blue-Sentinel&label=OPERATIVES%20ON%20SITE&countColor=%23263238)
+![Build Status](https://img.shields.io/badge/Neural_Core-Stable-00c8ff?style=for-the-badge&logo=tensorflow)
+![Deployment](https://img.shields.io/badge/Protocol-AES--256-ff1744?style=for-the-badge&logo=gitbook)
+![Status](https://img.shields.io/badge/Node-Active-30d158?style=for-the-badge)
+
+> "In the modern theater of maritime sovereignty, visibility is the only weapon that matters. We are the architects of the new horizon."
+
+---
+
+## 🛰️ OPERATIONAL BRIEFING
+**Blue Sentinel** is a high-octane maritime intelligence platform designed to eliminate the "Dark Vessel" blind spot. Every year, **Illegal, Unreported, and Unregulated (IUU)** fishing drains billions from sovereign economies and devastates marine ecosystems. 
+
+This platform utilizes an autonomous **LSTM (Long Short-Term Memory)** neural engine to ingest live AIS telemetry, calculate behavioral risk indices, and predict vessel trajectories with tactical precision.
+
+### 📡 SYSTEM STATUS
+- [x] **Neural Core:** LSTM weights synchronized.
+- [x] **Tactical Mesh:** PyDeck/Mapbox integration live.
+- [x] **Uplink:** GSAT-7 Satellite simulation active.
+- [ ] **Phase 2:** Multi-agent swarm coordination (In Progress).
+
+---
+
+## 🛠️ THE TECH STACK
+
+| Category | Protocol / Tool |
+| :--- | :--- |
+| **Neural Logic** | ![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white) ![Keras](https://img.shields.io/badge/Keras-D00000?style=flat-square&logo=Keras&logoColor=white) |
+| **Interface** | ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=Streamlit&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) |
+| **Geospatial** | ![PyDeck](https://img.shields.io/badge/PyDeck-000000?style=flat-square) ![Mapbox](https://img.shields.io/badge/Mapbox-000000?style=flat-square&logo=mapbox&logoColor=white) |
+| **Language** | ![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white) |
+
+---
+
+## 🧠 NEURAL ARCHITECTURE: THE LSTM CORE
+Unlike standard trackers that only see the *now*, Blue Sentinel understands the *sequence*. The system processes a 10-step temporal window to detect non-linear course deviations.
+
+The core logic resides in the **Forget Gate**, which allows the system to discard irrelevant historical noise while retaining critical kinetic patterns:
+
+$$f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)$$
+
+The resulting **Cell State ($C_t$)** acts as the system's "short-term memory," identifying when a vessel's behavior (loitering, sudden acceleration, or zigzagging) matches known IUU profiles.
+
+---
+
+## 🗺️ TACTICAL HUD PREVIEW
+![Tactical Preview Placeholder](https://via.placeholder.com/1200x500/000000/00c8ff?text=AEGIS+TACTICAL+MESH+LIVE+VIEW)
+*Place a GIF of your running PyDeck map here to showcase the kinetic icon mapping.*
+
+---
+
+## 🚀 DEPLOYMENT SEQUENCE
+
+### **Local Environment**
+```bash
+# Clone the repository
+git clone [https://github.com/Hix-001/Blue-Sentinel.git](https://github.com/Hix-001/Blue-Sentinel.git)
 cd Blue-Sentinel
+
+# Initialize Maritime Environment
 pip install -r requirements.txt
-3. Establish UplinkLaunch the Aegis Command Interface:Bashstreamlit run blue_sentinel.py
-🏗️ Deployment ProcessDeploying Blue Sentinel effectively requires moving from a local development environment to a cloud-accessible node.Phase 1: Cloud HostingThe most efficient way to host this for a portfolio is via Streamlit Community Cloud.Connect your GitHub account to Streamlit Cloud.Point the deployer to your Hix-001/Blue-Sentinel repository and the main branch.Set the main file path to blue_sentinel.py.Phase 2: Handling Large Weights (Git LFS)Your .keras model file contains the neural weights. If this file exceeds 100MB, GitHub will reject the push.Solution: Use Git LFS (Large File Storage).git lfs track "*.keras"git add .gitattributesPhase 3: Environmental VariablesIf you are using a custom Mapbox style for the "Greyscale Ocean" look, you must add your MAPBOX_API_KEY to the Secrets section of your deployment dashboard to ensure the tactical mesh renders correctly in production.Disclaimer: This system is a tactical simulation intended for research and domain awareness advocacy. All neural weights are pre-trained on synthetic maritime behavioral data.Developed by Hix-001 // Node DL-04
+
+# Launch Command HUD
+streamlit run blue_sentinel.py
