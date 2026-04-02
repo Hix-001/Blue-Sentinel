@@ -74,4 +74,4 @@ if __name__ == "__main__":
     X_train, y_train = generate_synthetic_ais_sequences(num_sequences=2500, time_steps=TIME_STEPS)
     model = build_lstm_model(TIME_STEPS, FEATURES)
     model.fit(X_train, y_train, epochs=15, batch_size=32, validation_split=0.2)
-    model.save("vessel_predictor.keras")
+    model.save("../models/vessel_predictor.keras")

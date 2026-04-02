@@ -3,4 +3,7 @@ pandas
 numpy
 pydeck
 tensorflow
+<<<<<<< HEAD
 plotly
+=======
+>>>>>>> bdd39418e1a5ae9135bf643795b3dffd8a80489e
