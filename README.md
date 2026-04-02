@@ -1,4 +1,4 @@
-# ⚓ Blue Sentinel // Sovereign Maritime Intelligence
+# ⚓ Blue Sentinel / Sovereign Maritime Intelligence
 > **Autonomous IUU Detection & Predictive Vessel Analytics for the Indo-Pacific.**
 
 ![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)
