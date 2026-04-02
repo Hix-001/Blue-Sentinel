@@ -59,6 +59,20 @@ streamlit run blue_sentinel.py
 ```
 ---
 
+## 🛰️ TACTICAL HUD PREVIEW
+![Blue Sentinel HUD](assets/hud1.png)
+
+### 🚦 Marker Intelligence (The Mesh)
+The geospatial mesh translates raw AI risk scores into visual kinetic markers. Each dot represents a live vessel tracked via GSAT-7 uplink:
+
+* 🔵 **NOMINAL (Risk < 40%)**: Standard transit. Vessel follows established shipping lanes with consistent velocity vectors.
+* 🟡 **ANOMALY (Risk 40-70%)**: Suspicious maneuvering detected. Flagged for erratic course changes or loitering near Protected Areas.
+* 🔴 **CRITICAL (Risk > 70%)**: High-probability IUU signature. Matches patterns of transshipment or unauthorized extraction.
+
+*For a detailed breakdown of current fleet assets and raw data logs, see the [Fleet Report](./telemetry/fleet_report.md).*
+
+---
+
 ## 🚀 DEPLOYMENT COMPARISON
 
 | Feature | Local Environment | Docker Container | Cloud (Streamlit) |

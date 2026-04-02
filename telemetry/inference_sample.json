@@ -1,0 +1,61 @@
+
+{
+  "system_metadata": {
+    "node_id": "DL-04",
+    "deployment_zone": "Indo-Pacific",
+    "timestamp_utc": "2026-04-02T18:30:00Z",
+    "active_assets_tracked": 100,
+    "neural_core_status": "SYNCHRONIZED"
+  },
+  "fleet_data": [
+    {
+      "mmsi": 620235460,
+      "name": "MT Lakshadweep-60",
+      "class": "Tanker",
+      "registry": "Norway",
+      "telemetry": { "lat": 24.498, "lon": 63.374, "sog": 19.8, "cog": 347 },
+      "ai_analysis": {
+        "risk_score": 64.9,
+        "status": "MEDIUM",
+        "logic_flags": ["ABNORMAL_VELOCITY_INC", "REGISTRY_MISMATCH"]
+      }
+    },
+    {
+      "mmsi": 665606491,
+      "name": "RV Sagar Nidhi-42",
+      "class": "Research",
+      "registry": "Norway",
+      "telemetry": { "lat": 11.817, "lon": 92.866, "sog": 14.3, "cog": 129 },
+      "ai_analysis": {
+        "risk_score": 62.5,
+        "status": "MEDIUM",
+        "logic_flags": ["LOITERING_DETECTED"]
+      }
+    },
+    {
+      "mmsi": 419852630,
+      "name": "EASTERN STAR",
+      "class": "Fishing",
+      "registry": "Unknown",
+      "telemetry": { "lat": 8.520, "lon": 76.910, "sog": 2.1, "cog": 12 },
+      "ai_analysis": {
+        "risk_score": 94.2,
+        "status": "HIGH",
+        "logic_flags": ["IUU_SUSPECTED", "DARK_SHIP_PATTERN", "MPA_PROXIMITY"]
+      }
+    }
+    // ... [Entries 4 through 99 following the same structure] ...
+    {
+      "mmsi": 213125448,
+      "name": "MV Coromandel-44",
+      "class": "Cargo",
+      "registry": "Liberia",
+      "telemetry": { "lat": 19.627, "lon": 68.983, "sog": 10.7, "cog": 93 },
+      "ai_analysis": {
+        "risk_score": 12.7,
+        "status": "LOW",
+        "logic_flags": ["NOMINAL"]
+      }
+    }
+  ]
+}
