@@ -1,0 +1,3 @@
+Illegal, Unreported, and Unregulated (IUU) fishing poses a severe threat to marine biodiversity and global food security. Blue Sentinel is a machine learning solution designed to automate the monitoring of maritime regions.
+
+By processing [insert data type, e.g., Satellite Imagery / AIS signal data / Synthetic Aperture Radar], this model identifies suspicious vessel behaviors and potential geofencing violations in real-time. The goal of Blue Sentinel is to provide authorities and conservationists with a scalable, low-cost tool to protect vulnerable marine protected areas (MPAs) from exploitation.
