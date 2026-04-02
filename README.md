@@ -6,7 +6,7 @@
 ![Uptime](https://img.shields.io/badge/Status-Active-30d158?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-ff1744?style=for-the-badge)
 
-> "The oceans are no longer a blind spot. Visibility is the ultimate weapon of sovereignty."
+> <i>"The oceans are no longer a blind spot. Visibility is the ultimate weapon of sovereignty."</i>
 
 ---
 
