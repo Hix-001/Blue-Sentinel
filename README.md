@@ -1,5 +1,4 @@
 
-=======
 # ⚓ BLUE SENTINEL
 ### **Predictive Maritime Oversight // Indo-Pacific Node DL-04 // IUU Interdiction**
 
