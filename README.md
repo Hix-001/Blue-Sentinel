@@ -39,6 +39,22 @@ The system processes a 10-step temporal window to detect non-linear course devia
 $$f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)$$
 
 The resulting **Cell State ($C_t$)** identifies when a vessel's behavior—loitering, zigzagging, or sudden SOG (Speed Over Ground) spikes—matches known IUU signatures.
+---
+
+## 🚀 DEPLOYMENT PROTOCOL
+
+### **1. Local Installation (Windows/Linux/macOS)**
+Clone the repository and initialize the maritime environment:
+```bash
+# Clone the protocol
+git clone [https://github.com/Hix-001/Blue-Sentinel.git](https://github.com/Hix-001/Blue-Sentinel.git)
+cd Blue-Sentinel
+
+# Install Tactical Dependencies
+pip install -r requirements.txt
+
+# Establish Uplink
+streamlit run blue_sentinel.py
 
 ---
 
