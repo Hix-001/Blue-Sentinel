@@ -44,7 +44,6 @@
         "logic_flags": ["IUU_SUSPECTED", "DARK_SHIP_PATTERN", "MPA_PROXIMITY"]
       }
     }
-    // ... [Entries 4 through 99 following the same structure] ...
     {
       "mmsi": 213125448,
       "name": "MV Coromandel-44",

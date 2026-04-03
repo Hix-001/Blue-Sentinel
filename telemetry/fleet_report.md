@@ -1,10 +1,10 @@
 # 📊 FLEET MANIFESTO & ANALYSIS
 **Snapshot Archive // Node DL-04 Telemetry**
 
-This report contains the high-resolution breakdown of the 100-vessel fleet mesh. While the HUD provides spatial awareness, the Manifesto provides the raw metrics used by the Neural Core for risk classification.
+This report contains the high-resolution breakdown of the vessel fleet mesh. While the HUD provides spatial awareness, the Manifesto provides the raw metrics used by the Neural Core for risk classification.
 
 ## 🗒️ DATA SNAPSHOT
-![Fleet Manifesto Table](../assets/hud2.jpg)
+![Fleet Manifesto Table](../assets/hud2.PNG)
 
 ### 🧠 Understanding the Telemetry Table
 Each row in the manifesto represents a "State Snapshot" of a vessel. The AI calculates the **Risk Score** using five primary features:

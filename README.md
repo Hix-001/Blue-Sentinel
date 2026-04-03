@@ -60,7 +60,7 @@ streamlit run blue_sentinel.py
 ---
 
 ## 🛰️ TACTICAL HUD PREVIEW
-![Blue Sentinel HUD](assets/hud1.png)
+![Blue Sentinel HUD](assets/hud1.PNG)
 
 ### 🚦 Marker Intelligence (The Mesh)
 The geospatial mesh translates raw AI risk scores into visual kinetic markers. Each dot represents a live vessel tracked via GSAT-7 uplink:
