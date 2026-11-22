@@ -3,7 +3,7 @@ import { requestFrame } from '../core/renderGovernor.js';
 
 /**
  * Vessel Fleet Manager for Blue Sentinel.
- * Connects to FastAPI backend WebSocket, renders vessels,
+ * Connects to FastAPI backend WebSocket, renders vessels as rotating boat sprites,
  * kinetic wake trails, target locks, and focus de-emphasis.
  */
 
@@ -12,7 +12,7 @@ export class VesselManager {
     this.viewer = viewer;
     this.onSelectVessel = onSelectVessel;
     this.vessels = new Map();
-    this.points = viewer.scene.primitives.add(new Cesium.PointPrimitiveCollection());
+    this.billboards = viewer.scene.primitives.add(new Cesium.BillboardCollection());
     this.trails = viewer.scene.primitives.add(new Cesium.PolylineCollection());
     this.selectedMmsi = null;
     this.showTrails = true;
@@ -72,43 +72,53 @@ export class VesselManager {
       let entry = this.vessels.get(v.mmsi);
 
       // Height clamping above geoid ocean surface
-      const pos = Cesium.Cartesian3.fromDegrees(v.lon, v.lat, 20.0);
+      const pos = Cesium.Cartesian3.fromDegrees(v.lon, v.lat, 25.0);
       const isHigh = v.risk_level === "HIGH";
       const isMed = v.risk_level === "MEDIUM";
 
       let color = Cesium.Color.CYAN;
-      let size = 7;
+      let width = 22;
+      let height = 22;
+
       if (isHigh) {
         color = Cesium.Color.fromCssColorString('#ff2d55');
-        size = 11;
+        width = 30;
+        height = 30;
       } else if (isMed) {
         color = Cesium.Color.fromCssColorString('#ffb340');
-        size = 9;
+        width = 26;
+        height = 26;
       }
 
       // Focus De-emphasis: dim other vessels if one is selected
       if (this.selectedMmsi) {
         if (v.mmsi === this.selectedMmsi) {
           color = Cesium.Color.LIME;
-          size = 14;
+          width = 36;
+          height = 36;
         } else {
-          color = color.withAlpha(0.25);
+          color = color.withAlpha(0.22);
         }
       }
 
+      // Heading rotation (Cesium billboard rotation is counter-clockwise, COG is clockwise from North)
+      const rotationRad = -Cesium.Math.toRadians(v.cog || 0.0);
+
       if (!entry) {
-        // Create point primitive
-        const point = this.points.add({
+        // Create tactical boat billboard sprite
+        const billboard = this.billboards.add({
           position: pos,
-          pixelSize: size,
+          image: '/assets/boat.png',
+          width: width,
+          height: height,
+          rotation: rotationRad,
           color: color,
-          outlineColor: Cesium.Color.BLACK,
-          outlineWidth: 1.5,
+          scaleByDistance: new Cesium.NearFarScalar(5.0e3, 1.3, 8.0e6, 0.45),
           id: v.mmsi
         });
 
         // Create kinetic trail
-        const trailPositions = v.history.map(h => Cesium.Cartesian3.fromDegrees(h[1], h[0], 10.0));
+        const trailPositions = (v.history || []).map(h => Cesium.Cartesian3.fromDegrees(h[1], h[0], 10.0));
         const trail = this.trails.add({
           positions: trailPositions,
           width: isHigh ? 2.5 : 1.5,
@@ -117,13 +127,15 @@ export class VesselManager {
           })
         });
 
-        entry = { point, trail, data: v };
+        entry = { billboard, trail, data: v };
         this.vessels.set(v.mmsi, entry);
       } else {
         entry.data = v;
-        entry.point.position = pos;
-        entry.point.color = color;
-        entry.point.pixelSize = size;
+        entry.billboard.position = pos;
+        entry.billboard.color = color;
+        entry.billboard.width = width;
+        entry.billboard.height = height;
+        entry.billboard.rotation = rotationRad;
 
         // Update trail positions
         if (v.history && v.history.length >= 2) {
@@ -192,7 +204,7 @@ export class VesselManager {
 
   setVesselsVisible(visible) {
     this.showVessels = visible;
-    this.points.show = visible;
+    this.billboards.show = visible;
     this.trails.show = visible && this.showTrails;
     requestFrame();
   }
