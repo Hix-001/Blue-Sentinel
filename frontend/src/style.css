@@ -96,6 +96,14 @@ body, html {
   gap: 12px;
 }
 
+.hud-logo {
+  height: 28px;
+  width: auto;
+  max-width: 38px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(0, 200, 255, 0.6));
+}
+
 .status-pulse {
   width: 8px;
   height: 8px;

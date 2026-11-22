@@ -9,10 +9,12 @@ import numpy as np
 from dotenv import load_dotenv
 from ..ml.predictor import LSTMPredictor
 
-# Load environment variables from .env or .env.txt (Windows Notepad fallback)
-load_dotenv(".env")
-if not os.getenv("AISSTREAM_API_KEY"):
-    load_dotenv(".env.txt")
+def reload_environment():
+    """Reloads .env and .env.txt to pick up dynamically added API keys."""
+    load_dotenv(".env", override=True)
+    if not os.getenv("AISSTREAM_API_KEY"):
+        load_dotenv(".env.txt", override=True)
+    return os.getenv("AISSTREAM_API_KEY", "").strip()
 
 NAMES = {
     "Cargo":   ["MV Sindhu Star", "MV Bay Trader", "MV Bengal Pride", "MV Coromandel", "MV Vizag Express",
@@ -28,19 +30,34 @@ NAMES = {
 }
 BASE_SOG = {"Cargo": 14.0, "Tanker": 12.0, "Fishing": 7.5, "Security": 22.0, "Research": 10.0}
 
+def map_ais_type(type_code: int) -> str:
+    """Translates numerical AIS ShipType into standard operational classifications."""
+    if not type_code:
+        return "Commercial"
+    if type_code == 30 or (31 <= type_code <= 35):
+        return "Fishing"
+    elif 70 <= type_code <= 79:
+        return "Cargo"
+    elif 80 <= type_code <= 89:
+        return "Tanker"
+    elif 50 <= type_code <= 55:
+        return "Security"
+    elif 60 <= type_code <= 69:
+        return "Passenger"
+    return "Commercial"
+
 class FleetManager:
     """
-    Simulates and maintains a live mesh of vessels across the Indo-Pacific / Indian Ocean.
-    Ingests live AISStream.io telemetry when AISSTREAM_API_KEY is provided in .env,
-    otherwise runs high-fidelity simulated kinematic walks.
+    Maintains a real-time mesh of vessels across the Indo-Pacific / Indian Ocean.
+    Seamlessly ingests live AISStream.io telemetry when AISSTREAM_API_KEY is present,
+    and runs high-fidelity simulated kinematics as baseline/fallback.
     """
     def __init__(self, count: int = 60):
         self.predictor = LSTMPredictor()
         self.vessels = self._init_fleet(count)
         self.tick = 0
-        self.api_key = os.getenv("AISSTREAM_API_KEY", "").strip()
+        self.api_key = reload_environment()
         self.live_connected = False
-        self._bg_task = None
 
     def _init_fleet(self, count: int):
         rng = random.Random(42)
@@ -88,46 +105,66 @@ class FleetManager:
         return fleet
 
     async def start_live_ingestion(self):
-        """Asynchronous worker that ingests live AIS messages from AISStream.io if API key exists."""
+        """Connects to AISStream.io via secure WebSocket and streams real-time positions."""
+        self.api_key = reload_environment()
         if not self.api_key or self.api_key == "your_aisstream_api_key_here":
-            print("[AIS Ingestion] No live AISStream API key configured in .env. Running in simulation mode.")
+            print("[AIS Ingestion] No live AISStream API key configured. Running in high-fidelity simulation.")
             return
 
+        print("[AIS Ingestion] API Key detected in .env. Initializing live satellite/terrestrial AIS connection...")
+
+        # Indo-Pacific operational bounding box:
+        # Latitude: 0.0 (Equator) to 35.0 N (Persian Gulf/Hormuz/Gujarat)
+        # Longitude: 45.0 E (Red Sea/Arabian Gulf) to 105.0 E (Malacca Strait/Bay of Bengal)
         subscribe_message = {
             "APIKey": self.api_key,
-            "BoundingBoxes": [[[0.0, 50.0], [30.0, 105.0]]],  # Indo-Pacific bounding box
-            "FilterMessageTypes": ["PositionReport", "StandardClassBPositionReport"]
+            "BoundingBoxes": [
+                [[0.0, 45.0], [35.0, 105.0]]
+            ],
+            "FilterMessageTypes": ["PositionReport", "StandardClassBPositionReport", "ShipStaticData"]
         }
 
         url = "wss://stream.aisstream.io/v0/stream"
-        print("[AIS Ingestion] Attempting secure uplink to wss://stream.aisstream.io...")
 
         while True:
             try:
-                async with websockets.connect(url, ping_interval=20, ping_timeout=20) as ws:
+                async with websockets.connect(url, ping_interval=20, ping_timeout=25) as ws:
                     await ws.send(json.dumps(subscribe_message))
                     self.live_connected = True
-                    print("[AIS Ingestion] LIVE AISStream uplink established. Ingesting commercial maritime beacons.")
+                    print("[AIS Ingestion] UPLINK ESTABLISHED: Subscribed to Indo-Pacific maritime corridor.")
 
                     async for message in ws:
-                        record = json.loads(message)
-                        msg_type = record.get("MessageType")
-                        meta = record.get("MetaData", {})
-                        body = record.get("Message", {}).get(msg_type, {})
+                        try:
+                            record = json.loads(message)
+                            msg_type = record.get("MessageType")
+                            meta = record.get("MetaData", {})
+                            msg_body = record.get("Message", {}).get(msg_type, {})
 
-                        mmsi = meta.get("MMSI")
-                        lat = meta.get("latitude")
-                        lon = meta.get("longitude")
-                        name = (meta.get("ShipName") or f"VESSEL-{mmsi}").strip()
+                            mmsi = meta.get("MMSI")
+                            lat = meta.get("latitude")
+                            lon = meta.get("longitude")
+                            ship_name = (meta.get("ShipName") or f"VESSEL-{mmsi}").strip()
 
-                        if mmsi and lat is not None and lon is not None:
-                            sog = float(body.get("Sog", 10.0))
-                            cog = float(body.get("Cog", 0.0))
-                            self._update_live_vessel(mmsi, name, lat, lon, sog, cog)
+                            if msg_type in ["PositionReport", "StandardClassBPositionReport"]:
+                                if mmsi and lat is not None and lon is not None:
+                                    raw_sog = msg_body.get("Sog")
+                                    sog = float(raw_sog) if (raw_sog is not None and raw_sog < 100.0) else 10.0
+                                    raw_cog = msg_body.get("Cog")
+                                    cog = float(raw_cog) if (raw_cog is not None and raw_cog <= 360.0) else 0.0
+
+                                    self._update_live_vessel(mmsi, ship_name, float(lat), float(lon), sog, cog)
+
+                            elif msg_type == "ShipStaticData":
+                                if mmsi and mmsi in self.vessels:
+                                    type_code = msg_body.get("Type", 0)
+                                    self.vessels[mmsi]["vtype"] = map_ais_type(type_code)
+
+                        except Exception as parse_err:
+                            continue
 
             except Exception as e:
                 self.live_connected = False
-                print(f"[AIS Ingestion] AISStream connection transient error: {e}. Reconnecting in 10s...")
+                print(f"[AIS Ingestion] Connection notice: {e}. Retrying uplink in 10s...")
                 await asyncio.sleep(10.0)
 
     def _update_live_vessel(self, mmsi: int, name: str, lat: float, lon: float, sog: float, cog: float):
@@ -135,9 +172,9 @@ class FleetManager:
         if not entry:
             entry = {
                 "mmsi": mmsi,
-                "name": name,
-                "vtype": "Cargo",
-                "flag": "Commercial",
+                "name": name if name and not name.startswith("0") else f"VESSEL-{mmsi}",
+                "vtype": "Commercial",
+                "flag": "Commercial Fleet",
                 "lat": round(lat, 4),
                 "lon": round(lon, 4),
                 "sog": round(sog, 1),
@@ -147,7 +184,7 @@ class FleetManager:
                 "history": [[round(lat, 4), round(lon, 4), round(sog, 1), round(cog, 1)]],
                 "risk_score": 10.0,
                 "risk_level": "LOW",
-                "flags": ["LIVE_BROADCAST"],
+                "flags": ["LIVE_AISSTREAM_BEACON"],
                 "predicted_lat": round(lat, 4),
                 "predicted_lon": round(lon, 4),
                 "source": "LIVE_AISSTREAM"
@@ -162,7 +199,7 @@ class FleetManager:
             if len(entry["history"]) > 20:
                 entry["history"].pop(0)
 
-            # Evaluate through the LSTM engine
+            # Evaluate through the LSTM neural core
             analysis = self.predictor.evaluate_vessel_risk(entry)
             entry["predicted_lat"] = analysis["predicted_lat"]
             entry["predicted_lon"] = analysis["predicted_lon"]
@@ -171,10 +208,10 @@ class FleetManager:
             entry["flags"] = analysis["flags"]
 
     def step(self):
-        """Advances fleet kinematics by one simulation tick and evaluates AI risk."""
+        """Advances simulation fleet and updates tick counter."""
         self.tick += 1
         for mmsi, v in list(self.vessels.items()):
-            # Only apply kinematic random walk to simulated vessels
+            # Only apply kinematic walk to simulated vessels
             if v.get("source") != "LIVE_AISSTREAM":
                 v["sog"] += random.uniform(-0.8, 0.8)
                 v["sog"] = float(np.clip(v["sog"], v["base_sog"] * 0.3, v["base_sog"] * 1.5))
