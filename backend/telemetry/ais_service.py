@@ -9,8 +9,10 @@ import numpy as np
 from dotenv import load_dotenv
 from ..ml.predictor import LSTMPredictor
 
-# Load environment variables from .env file (if present)
-load_dotenv()
+# Load environment variables from .env or .env.txt (Windows Notepad fallback)
+load_dotenv(".env")
+if not os.getenv("AISSTREAM_API_KEY"):
+    load_dotenv(".env.txt")
 
 NAMES = {
     "Cargo":   ["MV Sindhu Star", "MV Bay Trader", "MV Bengal Pride", "MV Coromandel", "MV Vizag Express",
