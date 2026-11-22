@@ -1,107 +1,140 @@
-
 # ⚓ BLUE SENTINEL
 ### **Predictive Maritime Oversight // Indo-Pacific Node DL-04 // IUU Interdiction**
 
-![Visitors](https://api.visitorbadge.io/api/visitors?path=Hix-001/Blue-Sentinel&label=OPERATIVES%20ON%20SITE&countColor=%23263238)
-![Neural Core](https://img.shields.io/badge/Neural_Core-Stable-00c8ff?style=for-the-badge&logo=tensorflow)
-![Uptime](https://img.shields.io/badge/Status-Active-30d158?style=for-the-badge)
 ![License](https://img.shields.io/badge/License-MIT-ff1744?style=for-the-badge)
+![Neural Core](https://img.shields.io/badge/Neural_Core-Synchronized-00c8ff?style=for-the-badge&logo=keras)
+![Frontend](https://img.shields.io/badge/Console-CesiumJS_WebGL-30d158?style=for-the-badge&logo=cesium)
+![Backend](https://img.shields.io/badge/API-FastAPI_WebSocket-0055ff?style=for-the-badge&logo=fastapi)
 
 > <i>"The oceans are no longer a blind spot. Visibility is the ultimate weapon of sovereignty."</i>
 
 ---
 
 ## ⚡ OPERATIONAL BRIEFING
-**BLUE SENTINEL** is a high-fidelity intelligence platform engineered to eliminate the "Dark Vessel" problem. Every year, **Illegal, Unreported, and Unregulated (IUU)** fishing drains $23B+ from global economies. 
+**BLUE SENTINEL** is an enterprise-grade C4ISR maritime domain awareness platform engineered to counter **Illegal, Unreported, and Unregulated (IUU)** fishing and dark vessel activity across the Indo-Pacific. 
 
-This system utilizes an autonomous **LSTM (Long Short-Term Memory)** neural core to ingest live AIS telemetry, calculate behavioral risk indices, and predict vessel trajectories with tactical precision.
-
-### 📡 SYSTEM STATUS
-- [x] **Neural Engine:** LSTM weights synchronized.
-- [x] **Tactical Mesh:** PyDeck/Mapbox integration live.
-- [x] **Telemetry:** GSAT-7 Satellite simulation active.
+The system operates on a **modern decoupled architecture**:
+1. **Python AI/ML Telemetry Backend (FastAPI):** Ingests live AIS vectors, runs batch spatiotemporal inference through a trained **LSTM (Long Short-Term Memory)** neural core (`vessel_predictor.keras`), and calculates explainable multi-factor IUU risk indices.
+2. **3D Tactical Web Console (CesiumJS + Vite):** A GPU-accelerated 3D geospatial environment running at a memory-governed 30 FPS with real-time GLSL post-processing sensors (FLIR Thermal, CRT Surveillance, NVG).
 
 ---
 
-## 🏗️ THE TECH STACK
+## 🏗️ SYSTEM ARCHITECTURE
 
-| Category | Component |
-| :--- | :--- |
-| **Neural Logic** | ![TensorFlow](https://img.shields.io/badge/TensorFlow-FF6F00?style=flat-square&logo=tensorflow&logoColor=white) ![Keras](https://img.shields.io/badge/Keras-D00000?style=flat-square&logo=Keras&logoColor=white) |
-| **Interface** | ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=flat-square&logo=Streamlit&logoColor=white) ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white) |
-| **Geospatial** | ![PyDeck](https://img.shields.io/badge/PyDeck-000000?style=flat-square) ![Mapbox](https://img.shields.io/badge/Mapbox-000000?style=flat-square&logo=mapbox&logoColor=white) |
+```mermaid
+flowchart LR
+    subgraph Data["1. Telemetry Feeds"]
+        AIS["AIS Stream / Telemetry Engine"]
+        TLE["CelesTrak SGP4 Satellites"]
+        FIRMS["NASA FIRMS Thermal Hotspots"]
+        CABLES["Subsea Cable Infrastructure"]
+    end
 
----
+    subgraph Backend["2. Python AI/ML Core (FastAPI)"]
+        LSTM["LSTM Neural Core (vessel_predictor.keras)"]
+        XAI["Explainable IUU Risk & Geofence Engine"]
+        WS["FastAPI WebSocket Streamer"]
+        
+        AIS --> LSTM --> XAI --> WS
+    end
 
-## 🧠 NEURAL ARCHITECTURE
-The system processes a 10-step temporal window to detect non-linear course deviations. We utilize the **Forget Gate** to discard irrelevant historical noise while retaining critical kinetic patterns:
-
-$$f_t = \sigma(W_f \cdot [h_{t-1}, x_t] + b_f)$$
-
-The resulting **Cell State ($C_t$)** identifies when a vessel's behavior—loitering, zigzagging, or sudden SOG (Speed Over Ground) spikes—matches known IUU signatures.
-
----
-
-## 🚀 DEPLOYMENT PROTOCOL
-
-### **1. Local Installation (Windows/Linux/macOS)**
-Clone the repository and initialize the maritime environment:
-```bash
-# Clone the protocol
-git clone [https://github.com/Hix-001/Blue-Sentinel.git](https://github.com/Hix-001/Blue-Sentinel.git)
-cd Blue-Sentinel
-
-# Install Tactical Dependencies
-pip install -r requirements.txt
-
-# Establish Uplink
-streamlit run blue_sentinel.py
+    subgraph Frontend["3. Tactical Console (CesiumJS + Vite)"]
+        Globe["CesiumJS 3D Earth (30 FPS Cap)"]
+        Shaders["GLSL Sensors (FLIR Thermal, NVG, CRT)"]
+        Cam["Cinematic Target Lock & Nadir Sat-View"]
+        HUD["Tactical Scope Reticles & Target Inspector"]
+        
+        WS -.->|ws://localhost:8000/ws/telemetry| Globe
+        TLE --> Globe
+        FIRMS --> Globe
+        CABLES --> Globe
+        Globe --> Shaders --> HUD
+    end
 ```
----
-
-## 🛰️ TACTICAL HUD PREVIEW
-![Blue Sentinel HUD](assets/hud1.PNG)
-
-### 🚦 Marker Intelligence (The Mesh)
-The geospatial mesh translates raw AI risk scores into visual kinetic markers. Each dot represents a live vessel tracked via GSAT-7 uplink:
-
-* 🔵 **NOMINAL (Risk < 40%)**: Standard transit. Vessel follows established shipping lanes with consistent velocity vectors.
-* 🟡 **ANOMALY (Risk 40-70%)**: Suspicious maneuvering detected. Flagged for erratic course changes or loitering near Protected Areas.
-* 🔴 **CRITICAL (Risk > 70%)**: High-probability IUU signature. Matches patterns of transshipment or unauthorized extraction.
-
-*For a detailed breakdown of current fleet assets and raw data logs, see the [Fleet Report](./telemetry/fleet_report.md).*
 
 ---
 
-## 🚀 DEPLOYMENT COMPARISON
+## 🛰️ CAPABILITIES & FEATURES
 
-| Feature | Local Environment | Docker Container | Cloud (Streamlit) |
-| :--- | :--- | :--- | :--- |
-| **Latency** | < 10ms | 15ms | 50ms+ |
-| **GPU Accel** | Native | Supported | Restricted |
-| **Compute** | Laptop Hardware | Virtualized | Distributed |
-| **Security** | Internal | Isolated | TLS Encrypted |
-
----
-
-## 📊 DATA SCHEMA (AIS INPUT)
-The Neural Core ingests the following telemetry for behavioral analysis:
-
-| Field | Description | Format |
-| :--- | :--- | :--- |
-| `MMSI` | Unique Vessel ID | 9-digit Integer |
-| `LAT / LON` | Geospatial Coordinates | Decimal Degrees |
-| `SOG` | Speed Over Ground | Knots (float) |
-| `COG` | Course Over Ground | Degrees (0-360) |
-| `Class` | Vessel Category | Type Mapping |
+* **🧠 LSTM Trajectory Anomaly Core:** Processes 10-step temporal vectors `[norm_lat, norm_lon, norm_sog, sin_cog, cos_cog]` to predict kinetic displacements and detect evasive loitering, zig-zagging, and MPA sanctuary incursions.
+* **🛰️ Real SGP4 Orbital Propagation:** Propagates real satellite orbits (GSAT-7 Naval Recon, ISS, Cartosat-3) every 1 second via `satellite.js`.
+* **📸 Satellite Direct View (Nadir Camera):** One-click camera lock placing the operator directly inside the satellite's downward-looking recon cone.
+* **🔥 GLSL FLIR Thermal Shaders:** Hardware-accelerated Forward-Looking Infrared sensor simulation with White-Hot, Black-Hot, and Ironbow ("Predator" heat-map) color ramps.
+* **📺 Tactical CRT Surveillance Mode:** Analog security monitor emulation with dynamic scanlines, barrel distortion, and timestamp watermark.
+* **🌊 Kinetic Wake Trails & Geoid Snapping:** Glowing, risk-colored historical ribbons with EGM96 sea-surface clamping.
+* **⚡ Render Governor (30 FPS Cap):** Limits frame rendering to 30 FPS with idle mode throttling, reducing GPU and RAM consumption by over 60%.
+* **🎯 Target Lock & Focus De-emphasis:** Clicking any vessel interpolates the camera into tracking mode and dims surrounding non-suspicious traffic.
+* **🌐 Undersea Infrastructure & Boundaries:** Integrated subsea telecommunications cables and Natural Earth marine territorial boundaries.
 
 ---
 
-## ⚖️ GOVERNANCE
-This project is open-source under the **MIT License**. 
-* **Contributions:** PRs are welcome for Node DL-04 expansion. 
-* **Disclaimer:** This is a tactical research simulation. All naval motifs are for educational and domain awareness advocacy.
+## 🚀 QUICK START PROTOCOL
+
+### Prerequisites
+* **Python 3.11+**
+* **Node.js 20+**
+
+### 1. Launch Everything via Unified Script (Windows PowerShell)
+```powershell
+./run_sentinel.ps1
+```
+
+### 2. Manual Startup
+
+**Terminal 1 — Python ML Backend:**
+```bash
+pip install -r requirements.txt
+$env:KERAS_BACKEND = "torch"
+uvicorn backend.main:app --port 8000 --reload
+```
+
+**Terminal 2 — Vite 3D Tactical Console:**
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open your browser to: **`http://localhost:5173`**
 
 ---
-**Maintained by [Hix-001](https://github.com/Hix-001) // Node DL-04 // CSE Portfolio 2026**
 
+## 📁 REPOSITORY STRUCTURE
+
+```
+BLUE SENTINEL/
+├── backend/                  # FastAPI Python ML & Telemetry Service
+│   ├── main.py               # REST API & WebSocket Streamer
+│   ├── ml/
+│   │   ├── predictor.py      # LSTM Model Loader & IUU Risk Engine
+│   │   └── preprocessor.py   # 10-Step, 5-Feature Tensor Normalizer
+│   ├── telemetry/
+│   │   ├── ais_service.py    # Vessel Fleet Manager & Kinematic Simulation
+│   │   └── weather.py        # Marine Weather Telemetry (Open-Meteo)
+│   └── requirements.txt
+├── frontend/                 # CesiumJS + Vite 3D WebGL Console
+│   ├── index.html            # Tactical HUD & Layout
+│   ├── vite.config.js        # Vite + Cesium Proxy Config
+│   ├── public/data/          # Undersea Cables & Marine Boundaries GeoJSON
+│   └── src/
+│       ├── main.js           # Console Orchestrator
+│       ├── core/
+│       │   └── renderGovernor.js # 30 FPS Capped Render Governor
+│       ├── shaders/
+│       │   └── shaderPipeline.js # GLSL FLIR Thermal, CRT, NVG Shaders
+│       ├── satellites/
+│       │   └── satelliteManager.js # SGP4 Orbital Propagator & Nadir View
+│       ├── vessels/
+│       │   └── vesselManager.js  # WebSocket Telemetry, Trails, Target Lock
+│       └── layers/               # Cables, Marine Boundaries, FIRMS Heatmaps
+├── models/
+│   └── vessel_predictor.keras # Trained LSTM Neural Core
+├── archive/                  # Preserved legacy Streamlit scripts
+├── run_sentinel.ps1          # One-Click Unified Launcher
+└── README.md
+```
+
+---
+
+## ⚖️ GOVERNANCE & LICENSE
+Licensed under the **MIT License**. Maintained for maritime domain awareness and advanced geospatial intelligence research.

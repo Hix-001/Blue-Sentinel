@@ -1,6 +1,8 @@
-streamlit
-pandas
-numpy
-pydeck
-tensorflow
-plotly
+fastapi>=0.110.0
+uvicorn>=0.28.0
+websockets>=12.0
+keras>=3.0.0
+torch>=2.0.0
+numpy>=1.24.0
+pandas>=2.0.0
+pydantic>=2.0.0
