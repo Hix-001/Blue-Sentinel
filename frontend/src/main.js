@@ -9,11 +9,7 @@ import { FirmsThermalLayer } from './layers/firmsLayer.js';
 
 // Setup Cesium Viewer with Keyless Esri World Imagery & Dark Sea Base
 const viewer = new Cesium.Viewer('cesiumContainer', {
-  baseLayer: new Cesium.ImageryLayer(
-    new Cesium.ArcGisMapServerImageryProvider({
-      url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer'
-    })
-  ),
+  baseLayer: false,
   animation: false,
   baseLayerPicker: false,
   fullscreenButton: false,
@@ -27,6 +23,25 @@ const viewer = new Cesium.Viewer('cesiumContainer', {
   scene3DOnly: true,
   shouldAnimate: true
 });
+
+// Asynchronously initialize Keyless Esri World Imagery with OSM fallback
+async function initBaseImagery() {
+  try {
+    const provider = await Cesium.ArcGisMapServerImageryProvider.fromUrl(
+      'https://services.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer',
+      { enablePickFeatures: false }
+    );
+    viewer.imageryLayers.addImageryProvider(provider);
+  } catch (err) {
+    console.warn('[Imagery] Esri unavailable, falling back to OpenStreetMap:', err);
+    const osmProvider = new Cesium.OpenStreetMapImageryProvider({
+      url: 'https://tile.openstreetmap.org/'
+    });
+    viewer.imageryLayers.addImageryProvider(osmProvider);
+  }
+  requestFrame();
+}
+initBaseImagery();
 
 // Atmospheric & Lighting tuning
 viewer.scene.globe.enableLighting = true;
