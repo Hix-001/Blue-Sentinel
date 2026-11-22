@@ -10,10 +10,8 @@ from dotenv import load_dotenv
 from ..ml.predictor import LSTMPredictor
 
 def reload_environment():
-    """Reloads .env and .env.txt to pick up dynamically added API keys."""
+    """Reloads .env to pick up API credentials."""
     load_dotenv(".env", override=True)
-    if not os.getenv("AISSTREAM_API_KEY"):
-        load_dotenv(".env.txt", override=True)
     return os.getenv("AISSTREAM_API_KEY", "").strip()
 
 NAMES = {

@@ -1,6 +1,8 @@
 # ⚓ BLUE SENTINEL
 ### **Predictive Maritime Oversight // Indo-Pacific Node DL-04 // IUU Interdiction**
 
+![Blue Sentinel Mission Banner](assets/banner.png)
+
 ![License](https://img.shields.io/badge/License-MIT-ff1744?style=for-the-badge)
 ![Neural Core](https://img.shields.io/badge/Neural_Core-Synchronized-00c8ff?style=for-the-badge&logo=keras)
 ![Frontend](https://img.shields.io/badge/Console-CesiumJS_WebGL-30d158?style=for-the-badge&logo=cesium)

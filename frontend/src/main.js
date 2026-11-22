@@ -73,7 +73,10 @@ function handleSelectVessel(vessel) {
     <div class="risk-meter">
       <div class="risk-head">
         <span style="color:rgba(255,255,255,0.6)">LSTM ANOMALY RISK</span>
-        <b style="color:${barColor}">${vessel.risk_score}% [${vessel.risk_level}]</b>
+        <span style="display:flex; align-items:center; gap:6px;">
+          ${isHigh ? '<img src="/assets/badge_icon.png" style="width:16px; height:16px; object-fit:contain;">' : ''}
+          <b style="color:${barColor}">${vessel.risk_score}% [${vessel.risk_level}]</b>
+        </span>
       </div>
       <div class="risk-bar">
         <div class="risk-bar-fill" style="width:${vessel.risk_score}%; background:${barColor}; box-shadow: 0 0 8px ${barColor}"></div>
