@@ -23,7 +23,11 @@ export class VesselManager {
   }
 
   _connectWebSocket() {
-    const wsUrl = `ws://${window.location.hostname}:8000/ws/telemetry`;
+    const defaultWs = window.location.protocol === 'https:'
+      ? `wss://${window.location.host}/ws/telemetry`
+      : `ws://${window.location.hostname}:8000/ws/telemetry`;
+    const wsUrl = import.meta.env.VITE_WS_URL || defaultWs;
+    console.log(`[AIS Stream] Connecting to WebSocket: ${wsUrl}`);
     const socket = new WebSocket(wsUrl);
 
     socket.onopen = () => {
@@ -49,7 +53,8 @@ export class VesselManager {
 
   async _pollHttp() {
     try {
-      const res = await fetch('/api/fleet');
+      const baseUrl = import.meta.env.VITE_API_URL || '';
+      const res = await fetch(`${baseUrl}/api/fleet`);
       const data = await res.json();
       if (data.vessels) {
         this.updateFleet(data.vessels);
