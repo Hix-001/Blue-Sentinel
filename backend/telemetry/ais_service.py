@@ -6,12 +6,20 @@ import math
 import asyncio
 import websockets
 import numpy as np
-from dotenv import load_dotenv
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(*args, **kwargs):
+        pass
+
 from ..ml.predictor import LSTMPredictor
 
 def reload_environment():
     """Reloads .env to pick up API credentials."""
-    load_dotenv(".env", override=True)
+    try:
+        load_dotenv(".env", override=True)
+    except Exception:
+        pass
     return os.getenv("AISSTREAM_API_KEY", "").strip()
 
 NAMES = {
