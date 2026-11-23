@@ -286,6 +286,10 @@ BLUE SENTINEL/
 ├── telemetry/
 │   ├── fleet_report.md           # Automated Telemetry Analysis Report
 │   └── inference_sample.json     # Sample Vectorized Kinematic Telemetry Batch
+├── Dockerfile                    # Production Container for Python AI/ML Core
+├── .dockerignore                 # Container Build Exclusion Filter
+├── docker-compose.yml            # Multi-Container Unified Stack Orchestrator
+├── render.yaml                   # 1-Click Render Cloud Blueprint
 ├── .env                          # Local Environment Variables (AISStream Key) [Ignored]
 ├── .gitignore                    # Comprehensive Zero-Trust Git Ignore Filter
 ├── LICENSE                       # MIT Open Source License
@@ -318,7 +322,18 @@ The fastest way to launch the entire platform:
 
 ---
 
-### 2. Manual Decoupled Launch
+### 2. Docker Multi-Container Stack (Cross-Platform)
+Run the entire production stack in isolated containers with a single command:
+```bash
+docker compose up --build
+```
+* Builds the compact Python 3.11 slim container with CPU-optimized PyTorch.
+* Spawns the 3D CesiumJS console with automatic dependency isolation.
+* Real-time internal health checks gate traffic until the neural weights are loaded.
+
+---
+
+### 3. Manual Decoupled Launch
 
 #### Step A: Initialize the Python AI/ML Backend
 ```bash
