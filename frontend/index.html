@@ -49,6 +49,11 @@
         <span class="pill-label">INTERDICTIONS</span>
         <span class="pill-val alert" id="high-risk-count">0 CRITICAL</span>
       </div>
+      <div class="stat-pill clearance-pill">
+        <span class="pill-label">SECURITY CLEARANCE</span>
+        <span class="pill-val unverified" id="operator-role-badge">UNVERIFIED</span>
+        <button id="btn-auth-trigger" class="auth-toggle-btn">LOGIN</button>
+      </div>
       <div class="stat-pill clock-pill">
         <span id="utc-clock">00:00:00 UTC</span>
       </div>
@@ -115,6 +120,60 @@
   <div class="hud-ticker">
     <div class="ticker-badge">LIVE EVENT STREAM</div>
     <div class="ticker-content" id="ticker-text">CONNECTING TO FASTAPI LSTM TELEMETRY BRIDGE...</div>
+  </div>
+
+  <!-- Tactical Security Clearance Terminal Modal -->
+  <div class="auth-modal-overlay" id="auth-modal" style="display: none;">
+    <div class="auth-modal-panel">
+      <div class="auth-header">
+        <div class="auth-title-row">
+          <span class="auth-icon">🛡️</span>
+          <div>
+            <div class="auth-title">SECURITY CLEARANCE TERMINAL</div>
+            <div class="auth-subtitle">INDO-PACIFIC THEATRE // BLUE SENTINEL C4ISR</div>
+          </div>
+        </div>
+        <button class="auth-close-btn" id="btn-close-auth">✕</button>
+      </div>
+
+      <div class="auth-body">
+        <p class="auth-desc">Select an operational clearance tier or enter your callsign credentials:</p>
+
+        <!-- Quick 1-Click Testing Credentials -->
+        <div class="quick-credentials-grid">
+          <button type="button" class="quick-cred-btn commander-btn" data-user="COM101" data-pass="hix001com">
+            <span class="cred-role">COMMANDER</span>
+            <span class="cred-user">COM101</span>
+            <span class="cred-pass">PIN: hix001com</span>
+          </button>
+          <button type="button" class="quick-cred-btn analyst-btn" data-user="ANA202" data-pass="hix001ana">
+            <span class="cred-role">ANALYST</span>
+            <span class="cred-user">ANA202</span>
+            <span class="cred-pass">PIN: hix001ana</span>
+          </button>
+          <button type="button" class="quick-cred-btn operator-btn" data-user="OPR303" data-pass="hix001opr">
+            <span class="cred-role">OPERATOR</span>
+            <span class="cred-user">OPR303</span>
+            <span class="cred-pass">PIN: hix001opr</span>
+          </button>
+        </div>
+
+        <form id="auth-form" class="auth-form">
+          <div class="form-group">
+            <label for="auth-username">OPERATOR CALLSIGN / ID</label>
+            <input type="text" id="auth-username" required autocomplete="username" placeholder="e.g. COM101" />
+          </div>
+          <div class="form-group">
+            <label for="auth-password">ACCESS SECURITY PIN</label>
+            <input type="password" id="auth-password" required autocomplete="current-password" placeholder="••••••••" />
+          </div>
+          <div id="auth-error-msg" class="auth-error" style="display: none;"></div>
+          <button type="submit" class="auth-submit-btn" id="btn-submit-auth">
+            AUTHENTICATE CREDENTIALS
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
 
   <script type="module" src="/src/main.js"></script>

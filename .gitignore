@@ -138,6 +138,12 @@ celerybeat.pid
 .env
 .env.*
 .env.txt
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+backend/data/
 *.env*
 !.env.example
 .envrc

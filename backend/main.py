@@ -5,11 +5,15 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from .telemetry.ais_service import FleetManager
 from .telemetry.weather import fetch_marine_weather
+from .auth.db import init_db
+from .auth.routes import router as auth_router
 
 fleet_manager = FleetManager(count=75)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Initialize authentication database and seed default accounts
+    init_db()
     # Startup: Start live AISStream ingestion task in background if configured in .env
     bg_task = asyncio.create_task(fleet_manager.start_live_ingestion())
     yield
@@ -31,6 +35,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Register Authentication & Clearance Router
+app.include_router(auth_router)
 
 @app.get("/api/health")
 def health_check():

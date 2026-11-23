@@ -6,6 +6,10 @@ import { VesselManager } from './vessels/vesselManager.js';
 import { SubmarineCablesLayer } from './layers/cablesLayer.js';
 import { MarineBoundariesLayer } from './layers/boundariesLayer.js';
 import { FirmsThermalLayer } from './layers/firmsLayer.js';
+import { AuthManager } from './auth/authManager.js';
+
+// Initialize Security Clearance & Authentication Manager
+const authManager = new AuthManager();
 
 // Setup Cesium Viewer with Keyless Esri World Imagery & Dark Sea Base
 const viewer = new Cesium.Viewer('cesiumContainer', {

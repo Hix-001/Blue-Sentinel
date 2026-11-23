@@ -242,6 +242,19 @@ Blue Sentinel renders critical layers for geopolitical context:
 
 ---
 
+### 9. Built-In Security Clearance & Role-Based Access Control (RBAC)
+Blue Sentinel includes an autonomous, self-contained **JWT Cryptographic Authentication Engine** (`backend/auth/`) with persistent SQLite storage and zero third-party dependencies:
+
+| Clearance Role | Callsign | Access PIN | Operational Scope |
+|:---:|:---:|:---:|---|
+| **`COMMANDER`** | **`COM101`** | `hix001com` | Full tactical command, interdiction dispatch priority, system override. |
+| **`ANALYST`** | **`ANA202`** | `hix001ana` | Deep LSTM loss drilldown, raw trajectory tensors, kinematics audit. |
+| **`OPERATOR`** | **`OPR303`** | `hix001opr` | Standard tactical radar tracking, sensor shaders, situational awareness. |
+
+* The **Tactical Clearance Access Terminal** on the frontend provides 1-click credential switching and live clearance status chips in the Topbar HUD.
+
+---
+
 ## 📁 REPOSITORY DIRECTORY STRUCTURE
 
 ```
@@ -255,6 +268,10 @@ BLUE SENTINEL/
 │   └── hud2.PNG                  # Satellite Reconnaissance Screenshot
 ├── backend/                      # Python ML & Telemetry Async Service
 │   ├── main.py                   # FastAPI Application, REST Endpoints & WebSocket
+│   ├── auth/                     # Built-In JWT Security Clearance & RBAC Engine
+│   │   ├── security.py           # Cryptographic Token Issuance & PBKDF2 Password Hashing
+│   │   ├── db.py                 # SQLite User Persistence & Account Seeding
+│   │   └── routes.py             # Auth REST Endpoints (/login, /me, /roles)
 │   ├── ml/
 │   │   ├── predictor.py          # Keras 3 LSTM Model Loader & IUU Risk Engine
 │   │   └── preprocessor.py       # 10-Step, 5-Feature Tensor Normalization

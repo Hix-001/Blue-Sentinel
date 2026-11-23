@@ -404,3 +404,270 @@ body, html {
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* ==============================================================================
+   TACTICAL SECURITY CLEARANCE HUD & MODAL
+   ============================================================================== */
+
+.clearance-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-toggle-btn {
+  background: rgba(0, 200, 255, 0.15);
+  border: 1px solid var(--border-cyan);
+  color: var(--cyan);
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.2s ease;
+}
+
+.auth-toggle-btn:hover {
+  background: rgba(0, 200, 255, 0.3);
+  color: #fff;
+}
+
+.auth-toggle-btn.active {
+  background: rgba(255, 45, 85, 0.15);
+  border-color: rgba(255, 45, 85, 0.4);
+  color: var(--red);
+}
+
+.pill-val.role-commander {
+  color: #ffb300;
+  text-shadow: 0 0 10px rgba(255, 179, 0, 0.5);
+  font-weight: 700;
+}
+
+.pill-val.role-analyst {
+  color: #00e5ff;
+  text-shadow: 0 0 10px rgba(0, 229, 255, 0.5);
+  font-weight: 700;
+}
+
+.pill-val.role-operator {
+  color: #00e676;
+  text-shadow: 0 0 10px rgba(0, 230, 118, 0.5);
+  font-weight: 700;
+}
+
+.pill-val.unverified {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Auth Modal Overlay */
+.auth-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 10, 20, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-modal-panel {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(10, 18, 32, 0.95);
+  border: 1px solid var(--border-cyan);
+  border-radius: 14px;
+  box-shadow: 0 0 40px rgba(0, 200, 255, 0.2), inset 0 0 20px rgba(0, 200, 255, 0.05);
+  overflow: hidden;
+  animation: modalIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.96) translateY(-10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.auth-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  background: rgba(0, 0, 0, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.auth-title-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth-icon {
+  font-size: 1.5rem;
+}
+
+.auth-title {
+  font-family: var(--font-sora);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #fff;
+}
+
+.auth-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--cyan);
+  letter-spacing: 1px;
+}
+
+.auth-close-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.auth-close-btn:hover { color: #fff; }
+
+.auth-body {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.auth-desc {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0;
+}
+
+/* Quick Credentials Grid */
+.quick-credentials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.quick-cred-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 10px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.quick-cred-btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.quick-cred-btn .cred-role {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.quick-cred-btn .cred-user {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: #fff;
+}
+
+.quick-cred-btn .cred-pass {
+  font-family: var(--font-mono);
+  font-size: 0.52rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.quick-cred-btn.commander-btn { border-color: rgba(255, 179, 0, 0.4); }
+.quick-cred-btn.commander-btn .cred-role { color: #ffb300; }
+.quick-cred-btn.commander-btn:hover { border-color: #ffb300; box-shadow: 0 0 12px rgba(255, 179, 0, 0.3); }
+
+.quick-cred-btn.analyst-btn { border-color: rgba(0, 229, 255, 0.4); }
+.quick-cred-btn.analyst-btn .cred-role { color: #00e5ff; }
+.quick-cred-btn.analyst-btn:hover { border-color: #00e5ff; box-shadow: 0 0 12px rgba(0, 229, 255, 0.3); }
+
+.quick-cred-btn.operator-btn { border-color: rgba(0, 230, 118, 0.4); }
+.quick-cred-btn.operator-btn .cred-role { color: #00e676; }
+.quick-cred-btn.operator-btn:hover { border-color: #00e676; box-shadow: 0 0 12px rgba(0, 230, 118, 0.3); }
+
+/* Form Elements */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  color: var(--cyan);
+  letter-spacing: 1px;
+}
+
+.form-group input {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.form-group input:focus {
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px rgba(0, 200, 255, 0.25);
+}
+
+.auth-error {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--red);
+  background: rgba(255, 45, 85, 0.12);
+  border: 1px solid rgba(255, 45, 85, 0.3);
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+
+.auth-submit-btn {
+  background: linear-gradient(135deg, rgba(0, 150, 255, 0.8), rgba(0, 230, 200, 0.8));
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-family: var(--font-sora);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  margin-top: 6px;
+}
+
+.auth-submit-btn:hover {
+  box-shadow: 0 0 20px rgba(0, 200, 255, 0.5);
+  transform: translateY(-1px);
+}
